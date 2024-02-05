@@ -6,9 +6,9 @@ interface Query{
    sizeId?:string,
    isFeatured?:boolean,
 }
-const URL=`${process.env.NEXT_PUBLIC_API_URL}/products`;
 
-const getProducts=async(query:Query):Promise<Product[]>=>{
+const getProducts=async(query:Query,storeId:string):Promise<Product[]>=>{
+   const URL=`${process.env.NEXT_PUBLIC_API_URL}/${storeId}/products`;
    const url=qs.stringifyUrl({
       url:URL,
       query:{
