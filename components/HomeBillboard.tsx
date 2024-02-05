@@ -1,13 +1,21 @@
+"use client"
 import { Billboard as BillboardType} from "@/types";
+import { useParams, useRouter } from "next/navigation";
 interface BillboardProps{
-    data:BillboardType | null
+    data:BillboardType 
 }
 
-const Billboard:React.FC<BillboardProps> = ({
+const HomeBillboard:React.FC<BillboardProps> = ({
     data
 }) => {
+  const router=useRouter()
+  const params=useParams()
+  const handleClick=()=>{
+    router.push(`/${data.id}/bussinessClient`)
+  }
     return ( 
         <div 
+        onClick={handleClick}
         className="p-4 sm:p-6 lg:p-8 rounded-xl overflow-hidden"
         >
           <div 
@@ -25,4 +33,4 @@ const Billboard:React.FC<BillboardProps> = ({
      );
 }
  
-export default Billboard;
+export default HomeBillboard;

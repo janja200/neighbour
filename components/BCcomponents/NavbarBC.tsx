@@ -5,12 +5,15 @@ import getCategories from "@/actions/get-categories";
 import NavbarActions from "./NavbarActions";
 
 export const revalidate=0;
-const NavbarBC = async() => {
-  const categories=await getCategories()
+interface NavbarbcProps{
+  storeId:string
+}
+const NavbarBC = async({storeId}:NavbarbcProps) => {
+  const categories=await getCategories(storeId)
     return ( 
         <Container>
-         <div className="relative border-b fixed px-4 sm:px-6 lg:px-8 flex h-16 items-center ">
-          <Link href="/bussinessClient" className="ml-4 flex lg:ml-0 gap-x-2">
+         <div className="relative border-b  px-4 sm:px-6 lg:px-8 flex h-16 items-center ">
+          <Link href="" className="ml-4 flex lg:ml-0 gap-x-2">
             <p className="font-bold text-xl">
                 Store
             </p>

@@ -5,7 +5,7 @@ import Image from "next/image";
 import IconButton from "./icon-button";
 import { Expand, ShoppingCart } from "lucide-react";
 import Currency from "./Currency";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import usePreviewModal from "@/hooks/usePreviewModal";
 import { MouseEventHandler } from "react";
 import useCart from "@/hooks/use-cart";
@@ -17,10 +17,11 @@ const ProductCard:React.FC<ProductCardProps> = ({
    data
 }) => {
   const router=useRouter()
+  const params=useParams()
   const previewModal=usePreviewModal()
   const cart=useCart()
   const handleClick=()=>{
-    router.push(`/bussinessClient/product/${data?.id}`)
+    router.push(`/${params.storeId}/bussinessClient/product/${data?.id}`)
   }
   const onPreview:MouseEventHandler<HTMLButtonElement>=(event)=>{
     event.stopPropagation()

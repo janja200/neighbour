@@ -2,7 +2,7 @@
 import { cn } from "@/lib/utils";
 import { Category } from "@/types";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useParams, usePathname } from "next/navigation";
 
 interface mainNavProps{
     data:Category[]
@@ -11,10 +11,11 @@ const MainNavBC:React.FC<mainNavProps> = ({
     data
 }) => {
     const pathname=usePathname()
+    const params=useParams()
     const routes=data.map((route)=>({
-        href:`/bussinessClient/category/${route.id}`,
+        href:`/${params.storeId}/bussinessClient/category/${route.id}`,
         label:route.name,
-        active:pathname===`/bussinessClient/category/${route.id}`
+        active:pathname===`/${params.storeId}/bussinessClient/category/${route.id}`
     }))
     return ( 
         <nav className="mx-6 flex items-center space-x-4 lg:space-x-4">
