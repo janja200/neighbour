@@ -12,6 +12,38 @@ datasource db {
   
 }
 
+model User {
+   id              String @id @default(auto()) @map("_id") @db.ObjectId
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime? @map("email_verified")
+  image         String?
+  password         String?
+  accounts      Account[]
+
+  @@map("users")
+}
+
+model Account {
+  id              String @id @default(auto()) @map("_id") @db.ObjectId
+  userId             String   @db.ObjectId
+  type               String
+  provider           String
+  providerAccountId  String  @map("provider_account_id")
+  refresh_token      String? 
+  access_token       String? 
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String? 
+  session_state      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+  @@index([userId])
+}
 model Store {
   id              String @id @default(auto()) @map("_id") @db.ObjectId
   name            String
@@ -21,6 +53,7 @@ model Store {
   products        Product[]  @relation("StoreToProduct")
   sizes           Size[]     @relation("StoreToSize")
   colors          Color[]     @relation("StoreToColor")
+  location        Location?     @relation("StoreToLocation")
   orders          Order[]     @relation("StoreToOrder")
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @updatedAt
@@ -140,4 +173,20 @@ model Image {
   updatedAt   DateTime @updatedAt
 
   @@index([productId])
+}
+
+model Location {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  latitude Float
+  longitude Float
+  country     String?
+  state     String?
+  region     String?
+  subRegion  String?
+  storeId    String  @db.ObjectId @unique // Foreign Key to Store
+  store      Store     @relation("StoreToLocation", fields: [storeId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+
 }
